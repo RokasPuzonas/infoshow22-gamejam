@@ -7,7 +7,7 @@
 	*	[x] Health
 	*	[x] Movement range
 	*	[x] Movement pattern
-* [ ] Mutations (Rokas)
+* [x] Mutations
 	* [ ] Extra damage + pattern/range debuff
 	* [ ] Extra health + pattern/range debuff
 	* [ ] Extra range + pattern/range debuff
