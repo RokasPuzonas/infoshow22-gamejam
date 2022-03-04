@@ -1,16 +1,9 @@
 extends Spatial
 
-enum MOVEMENT_PATTERN {
-	NORMAL,
-	DIAGONAL,
-	HORSE,
-	LEFT_FORWARD
-}
-
 export var max_health = 100
 export var attack = 10
 export var movement_range = 3
-export var movement_pattern = MOVEMENT_PATTERN.NORMAL
+export var movement_pattern = MovementPattern.PATTERN.NORMAL
 
 var health = 0
 
@@ -18,7 +11,7 @@ func _ready():
 	health = max_health
 	
 	var Marker = load("res://MovementMarker.tscn")
-	var available_tiles = get_available_movement_tiles(0, 0, 2, MOVEMENT_PATTERN.NORMAL)
+	var available_tiles = get_available_movement_tiles(0, 0, 2, MovementPattern.PATTERN.NORMAL)
 
 	for tile in available_tiles:
 		var marker = Marker.instance()
@@ -43,13 +36,13 @@ func get_available_movement_tiles(x: int, y: int, move_range: int, move_pattern)
 
 func get_neighours(x: int, y: int, pattern):
 	match pattern:
-		MOVEMENT_PATTERN.NORMAL:
+		MovementPattern.PATTERN.NORMAL:
 			return get_normal_neighbours(x, y)
-		MOVEMENT_PATTERN.DIAGONAL:
+		MovementPattern.PATTERN.DIAGONAL:
 			return get_diagonal_neighbours(x, y)
-		MOVEMENT_PATTERN.HORSE:
+		MovementPattern.PATTERN.HORSE:
 			return get_horse_neighbours(x, y)
-		MOVEMENT_PATTERN.LEFT_FORWARD:
+		MovementPattern.PATTERN.LEFT_FORWARD:
 			return get_left_forward_neighbours(x, y)
 
 func get_normal_neighbours(x: int, y: int):

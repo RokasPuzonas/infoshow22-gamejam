@@ -1,7 +1,7 @@
 # Eldritch fun
 
 ## Tasks
-* [ ] Grid based movement of units (Ernestas)
+* [ ] Grid based movement of units
 * [x] Units
 	*	[x] Damage
 	*	[x] Health
