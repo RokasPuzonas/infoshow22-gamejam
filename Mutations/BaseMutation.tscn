@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Mutations/BaseMutation.gd" type="Script" id=1]
+
+[node name="BaseMutation" type="CenterContainer"]
+anchor_right = 0.195
+anchor_bottom = 0.237
+margin_right = 0.319992
+margin_bottom = -0.200012
+size_flags_horizontal = 0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Container" type="VBoxContainer" parent="."]
+margin_right = 200.0
+margin_bottom = 142.0
+rect_min_size = Vector2( 200, 0 )
+
+[node name="Name" type="Label" parent="Container"]
+margin_right = 200.0
+margin_bottom = 14.0
+text = "[NAME]"
+align = 1
+autowrap = true
+
+[node name="Description" type="Label" parent="Container"]
+margin_top = 18.0
+margin_right = 200.0
+margin_bottom = 118.0
+rect_min_size = Vector2( 0, 100 )
+text = "[DESCRIPTION]"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="ApplyButton" type="Button" parent="Container"]
+margin_top = 122.0
+margin_right = 200.0
+margin_bottom = 142.0
+text = "Apply mutation"
+
+[connection signal="pressed" from="Container/ApplyButton" to="." method="_on_ApplyButton_pressed"]

@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Mutations/BaseMutation.tscn" type="PackedScene" id=1]
+
+[node name="StrenthMutation" type="CenterContainer"]
+anchor_right = 0.204
+anchor_bottom = 0.26
+margin_right = 0.103989
+margin_bottom = -7.00002
+size_flags_horizontal = 0
+
+[node name="BaseMutation" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 4.0
+margin_top = 3.0
+margin_right = 204.0
+margin_bottom = 145.0
+mutation_name = "Muscle power?"
+description = "Increases strength"

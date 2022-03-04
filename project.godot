@@ -8,10 +8,20 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "MovementPattern",
+"language": "GDScript",
+"path": "res://MovementPattern.gd"
+} ]
+_global_script_class_icons={
+"MovementPattern": ""
+}
+
 [application]
 
 config/name="InfoShow'22 Gamejam"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://Match.tscn"
 config/icon="res://icon.png"
 
 [importer_defaults]
