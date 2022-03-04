@@ -11,7 +11,10 @@
 	* [ ] Extra damage + pattern/range debuff
 	* [ ] Extra health + pattern/range debuff
 	* [ ] Extra range + pattern/range debuff
-* [ ] Melee attacks
+* [ ] Combat
+	* [ ] Select friendly unit
+	* [ ] Pick nearby enemy unit
+	* [ ] Execute attack
 * [ ] Custom movement pattern
 * [ ] Enemy/player turns
 * [ ] Game over state
