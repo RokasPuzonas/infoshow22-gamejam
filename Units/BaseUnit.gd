@@ -18,6 +18,18 @@ func _ready():
 		marker.translation = Vector3(tile.x, 0.1, tile.y)
 		add_child(marker)
 
+func apply_mutation(mutation):
+	if mutation.max_health_modifier != 0:
+		max_health *= (1 + mutation.max_health_modifier)
+		if mutation.max_health_modifier > 0:
+			health = max_health
+	
+	attack *= (1+mutation.attack_modifier)
+	movement_range += mutation.range_modifier
+	
+	if mutation.apply_pattern:
+		movement_pattern = mutation.override_pattern
+
 func get_available_movement_tiles(x: int, y: int, move_range: int, move_pattern):
 	var all_tiles = []
 	
