@@ -5,7 +5,7 @@ export var attack = 10
 export var movement_range = 3
 export var movement_pattern = MovementPattern.PATTERN.NORMAL
 
-var stage = 0;
+var stage = 2;
 
 export(Texture) var stage0_texture;
 export(Texture) var stage1_texture;
@@ -19,6 +19,7 @@ func _ready():
 	update_stage_sprite();
 	
 	var Marker = load("res://MovementMarker.tscn")
+	
 	var available_tiles = get_available_movement_tiles(0, 0, 2, MovementPattern.PATTERN.NORMAL)
 
 #	for tile in available_tiles:
