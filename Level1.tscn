@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://meshlib.tres" type="MeshLibrary" id=1]
-[ext_resource path="res://Units/PigeonUnit.tscn" type="PackedScene" id=2]
-[ext_resource path="res://World.gd" type="Script" id=3]
+[ext_resource path="res://World.gd" type="Script" id=2]
+[ext_resource path="res://Units/PigeonUnit.tscn" type="PackedScene" id=3]
 [ext_resource path="res://UI/MutationPicker.tscn" type="PackedScene" id=4]
 [ext_resource path="res://TestMutateButton.gd" type="Script" id=5]
-[ext_resource path="res://Units/DogUnit.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -31,17 +30,19 @@ margin_bottom = 65.0
 text = "Mutate"
 script = ExtResource( 5 )
 
-[node name="Spatial" type="Spatial" parent="."]
-script = ExtResource( 3 )
+[node name="World" type="Spatial" parent="."]
+script = ExtResource( 2 )
 
-[node name="Camera" type="Camera" parent="Spatial"]
+[node name="Camera" type="Camera" parent="World"]
 transform = Transform( 0.707107, 0.353553, -0.612372, 0, 0.866026, 0.5, 0.707107, -0.353553, 0.612372, -4, 4, 1 )
 environment = SubResource( 1 )
 projection = 1
 fov = 80.4707
 size = 10.0158
 
-[node name="GridMap" type="GridMap" parent="Spatial"]
+[node name="MoveMarkers" type="Spatial" parent="World"]
+
+[node name="GridMap" type="GridMap" parent="World"]
 mesh_library = ExtResource( 1 )
 cell_size = Vector3( 1, 1, 1 )
 data = {
@@ -52,13 +53,7 @@ __meta__ = {
 "_editor_floor_": Vector3( 0, -1, 0 )
 }
 
-[node name="Units" type="Node" parent="Spatial"]
+[node name="Units" type="Node" parent="World"]
 
-[node name="DogUnit2" parent="Spatial/Units" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0.5, -0.5 )
-
-[node name="DogUnit" parent="Spatial/Units" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.5, -7.5 )
-
-[node name="PigeonUnit" parent="Spatial/Units" instance=ExtResource( 2 )]
+[node name="PigeonUnit" parent="World/Units" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5 )

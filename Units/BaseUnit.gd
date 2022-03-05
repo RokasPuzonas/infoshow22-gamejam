@@ -15,26 +15,19 @@ var health = 0
 
 func _ready():
 	health = max_health
+	$MeshInstance.material_override = SpatialMaterial.new()
+	$MeshInstance.material_override.flags_transparent = true
+	$MeshInstance.material_override.flags_unshaded = true
 	
 	update_stage_sprite();
-	
-	var Marker = load("res://MovementMarker.tscn")
-	
-	var available_tiles = get_available_movement_tiles(0, 0, 2, MovementPattern.PATTERN.NORMAL)
-
-#	for tile in available_tiles:
-#		var marker = Marker.instance()
-#		marker.translation = Vector3(tile.x, 0.1, tile.y)
-#		add_child(marker)
 
 func update_stage_sprite():
-	var shader: SpatialMaterial = $MeshInstance.mesh.surface_get_material(0)
 	if stage == 0:
-		shader.albedo_texture = stage0_texture
+		$MeshInstance.material_override.albedo_texture = stage0_texture
 	elif stage == 1:
-		shader.albedo_texture = stage1_texture
+		$MeshInstance.material_override.albedo_texture = stage1_texture
 	else:
-		shader.albedo_texture = stage2_texture
+		$MeshInstance.material_override.albedo_texture = stage2_texture
 
 func next_stage():
 	stage = max(stage+1, 2)
@@ -51,6 +44,9 @@ func apply_mutation(mutation):
 	
 	if mutation.apply_pattern:
 		movement_pattern = mutation.override_pattern
+
+func get_move_tiles():
+	return get_available_movement_tiles(0, 0, movement_range, movement_pattern)
 
 func get_available_movement_tiles(x: int, y: int, move_range: int, move_pattern):
 	var all_tiles = []

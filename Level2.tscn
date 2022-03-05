@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://meshlib.tres" type="MeshLibrary" id=1]
+[ext_resource path="res://World.gd" type="Script" id=2]
+[ext_resource path="res://Units/PigeonUnit.tscn" type="PackedScene" id=3]
 [ext_resource path="res://UI/MutationPicker.tscn" type="PackedScene" id=4]
 [ext_resource path="res://TestMutateButton.gd" type="Script" id=5]
-[ext_resource path="res://Camera.gd" type="Script" id=6]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -29,17 +30,17 @@ margin_bottom = 65.0
 text = "Mutate"
 script = ExtResource( 5 )
 
-[node name="Spatial" type="Spatial" parent="."]
+[node name="World" type="Spatial" parent="."]
+script = ExtResource( 2 )
 
-[node name="Camera" type="Camera" parent="Spatial"]
+[node name="Camera" type="Camera" parent="World"]
 transform = Transform( 0.707107, 0.353553, -0.612373, 0, 0.866026, 0.499999, 0.707107, -0.353553, 0.612373, -4, 4, 1 )
 environment = SubResource( 1 )
 projection = 1
 fov = 80.4707
 size = 10.0158
-script = ExtResource( 6 )
 
-[node name="GridMap" type="GridMap" parent="Spatial"]
+[node name="GridMap" type="GridMap" parent="World"]
 mesh_library = ExtResource( 1 )
 cell_size = Vector3( 1, 1, 1 )
 data = {
@@ -49,3 +50,8 @@ __meta__ = {
 "_editor_clip_": 0,
 "_editor_floor_": Vector3( 0, -1, 0 )
 }
+
+[node name="Units" type="Node" parent="World"]
+
+[node name="PigeonUnit" parent="World/Units" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5 )
