@@ -16,7 +16,6 @@ export(Texture) var stage2_texture;
 var health = 0
 
 func _ready():
-	
 	$Sprite.material_override = SpatialMaterial.new()
 	$Sprite.material_override.flags_transparent = true
 	$Sprite.material_override.flags_unshaded = true
@@ -40,14 +39,13 @@ func update_stage_sprite():
 		$Sprite.material_override.albedo_texture = stage2_texture
 
 func next_stage():
-	stage = max(stage+1, 2)
+	stage = min(stage+1, 2)
 	update_stage_sprite()
 
 func apply_mutation(mutation):
 	if stage == 2:
-		return true
+		return false
 	
-	stage += 1
 	
 	if mutation.max_health_modifier != 0:
 		max_health *= (1 + mutation.max_health_modifier)
@@ -60,6 +58,7 @@ func apply_mutation(mutation):
 	if mutation.apply_pattern:
 		movement_pattern = mutation.override_pattern
 	
+	next_stage()
 	return true
 
 func take_damage(damage):

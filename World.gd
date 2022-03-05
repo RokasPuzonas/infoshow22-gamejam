@@ -7,6 +7,8 @@ var current_marker
 
 var current_turn
 
+var selected_mutation
+
 signal phase_changed;
 
 func _ready():
@@ -67,14 +69,19 @@ func get_player_unit_at(x: int, y: int):
 
 
 func _process(delta):
-	if Input.is_action_just_pressed("ui_accept"):
-		get_tree().change_scene("res://LoseScreen.tscn")
-
 	var pos = get_tile_position();
 	if pos != null:
 		show_marker_at(pos.x, pos.z)
 	else:
 		hide_marker()
+	
+	if current_turn == TurnPhase.PHASE.MUTATION && pos != null && selected_mutation != null:
+		var unit_on_mouse = get_player_unit_at(pos.x, pos.z)
+		if Input.is_action_just_pressed("mouse_press") && unit_on_mouse != null and not unit_on_mouse.enemy:
+			if unit_on_mouse.apply_mutation(selected_mutation):
+				$"../LevelUI/PickUnitLabel".visible = false
+				selected_mutation = null
+				set_phase(TurnPhase.PHASE.PLAYER)
 
 	if current_turn == TurnPhase.PHASE.PLAYER && !has_unmoved_units("PlayerUnits"):
 		set_phase(TurnPhase.PHASE.ENEMY)
@@ -86,6 +93,7 @@ func set_phase(phase):
 		
 	current_turn = phase
 	if phase == TurnPhase.PHASE.PLAYER:
+		$"../LevelUI/PickUnitLabel".visible = false
 		reset_moved_units("PlayerUnits")
 		$EnemyController.set_process(false)
 		$PlayerController.set_process(true)
@@ -99,6 +107,8 @@ func set_phase(phase):
 		$EnemyController.set_process(false)
 		$PlayerController.set_process(false)
 		perform_combat()
+	elif phase == TurnPhase.PHASE.MUTATION:
+		$"../LevelUI/MutationPicker".show_picker()
 	emit_signal("phase_changed", phase)
 
 func perform_combat():
@@ -121,7 +131,7 @@ func perform_combat():
 				player_units.remove(player_units.find(nearby_unit))
 				nearby_unit.queue_free()
 	
-	set_phase(TurnPhase.PHASE.PLAYER)
+	set_phase(TurnPhase.PHASE.MUTATION)
 	
 func perform_attack(from, to):
 	to.emit_damage_particles()
@@ -193,7 +203,6 @@ func get_neighours(x: int, y: int, pattern):
 		positions.push_back(Vector2(x, y) + offset)
 	return positions
 
-
 func _on_EndTurnButton_pressed():
 	set_phase(TurnPhase.PHASE.ENEMY)
 
@@ -202,3 +211,7 @@ func _on_PlayerController_end_turn():
 
 func _on_EnemyController_end_turn():
 	set_phase(TurnPhase.PHASE.COMBAT)
+
+func _on_MutationPicker_pick_mutation(mutation):
+	$"../LevelUI/PickUnitLabel".visible = true
+	selected_mutation = mutation

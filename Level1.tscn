@@ -21,6 +21,7 @@ ambient_light_color = Color( 1, 1, 1, 1 )
 script = ExtResource( 5 )
 
 [node name="LevelUI" parent="." instance=ExtResource( 4 )]
+script = null
 
 [node name="PauseMenu" type="ColorRect" parent="LevelUI"]
 visible = false
