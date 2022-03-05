@@ -51,7 +51,6 @@ func _process(_delta):
 	var pos = world.get_tile_position();
 	if pos != null:
 		var unit_on_mouse = world.get_player_unit_at(pos.x, pos.z)
-		print(unit_on_mouse)
 		if Input.is_action_just_pressed("mouse_press"):
 			if selected_unit == null && unit_on_mouse != null and not unit_on_mouse.enemy and not unit_on_mouse.moved:
 				select_unit(unit_on_mouse)

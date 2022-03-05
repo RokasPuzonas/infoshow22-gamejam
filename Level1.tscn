@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://meshlib.tres" type="MeshLibrary" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Units/DogUnit.tscn" type="PackedScene" id=6]
 [ext_resource path="res://PlayerController.gd" type="Script" id=7]
 [ext_resource path="res://EnemyController.gd" type="Script" id=8]
+[ext_resource path="res://Units/BaseUnit.gd" type="Script" id=9]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -55,17 +56,21 @@ __meta__ = {
 
 [node name="PigeonUnit2" parent="World/PlayerUnits" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0.5, -4.5 )
+script = ExtResource( 9 )
 
 [node name="PigeonUnit" parent="World/PlayerUnits" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5 )
+script = ExtResource( 9 )
 
 [node name="EnemyUnits" type="Node" parent="World"]
 
 [node name="PigeonUnit" parent="World/EnemyUnits" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -6.5 )
+script = ExtResource( 9 )
 
 [node name="DogUnit" parent="World/EnemyUnits" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.5, 0.5 )
+script = ExtResource( 9 )
 enemy = true
 
 [connection signal="pressed" from="LevelUI/EndTurnButton" to="World" method="_on_EndTurnButton_pressed"]
