@@ -28,7 +28,12 @@ config/icon="res://icon.png"
 
 window/size/width=1280
 window/size/height=720
+window/size/fullscreen=true
 window/stretch/aspect="expand"
+
+[global]
+
+window=false
 
 [importer_defaults]
 

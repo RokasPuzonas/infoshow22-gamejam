@@ -1,12 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://meshlib.tres" type="MeshLibrary" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
 [ext_resource path="res://Units/PigeonUnit.tscn" type="PackedScene" id=3]
-[ext_resource path="res://UI/MutationPicker.tscn" type="PackedScene" id=4]
-[ext_resource path="res://TestMutateButton.gd" type="Script" id=5]
+[ext_resource path="res://UI/LevelUI.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Units/DogUnit.tscn" type="PackedScene" id=6]
-[ext_resource path="res://EndTurnButton.gd" type="Script" id=7]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -15,41 +13,20 @@ ambient_light_color = Color( 1, 1, 1, 1 )
 
 [node name="Level1" type="Node"]
 
-[node name="UI" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="EndTurnButton" type="Button" parent="UI"]
-margin_left = 28.0
-margin_top = 106.0
-margin_right = 161.0
-margin_bottom = 147.0
-text = "End Turn"
-script = ExtResource( 7 )
-
-[node name="MutationPicker" parent="UI" instance=ExtResource( 4 )]
-
-[node name="TestMutateButton" type="Button" parent="UI"]
-margin_left = 27.0
-margin_top = 24.0
-margin_right = 160.0
-margin_bottom = 65.0
-text = "Mutate"
-script = ExtResource( 5 )
+[node name="LevelUI" parent="." instance=ExtResource( 4 )]
 
 [node name="World" type="Spatial" parent="."]
 script = ExtResource( 2 )
 
 [node name="Timer" type="Timer" parent="World"]
+wait_time = 0.5
 one_shot = true
 
 [node name="Camera" type="Camera" parent="World"]
-transform = Transform( 0.707107, 0.353553, -0.612372, 0, 0.866026, 0.5, 0.707107, -0.353553, 0.612372, -4, 4, 1 )
+transform = Transform( 0.707107, 0.353553, -0.612373, 0, 0.866026, 0.499999, 0.707107, -0.353553, 0.612373, -6.424, 5.805, 3.501 )
 environment = SubResource( 1 )
 projection = 1
+current = true
 fov = 80.4707
 size = 10.0158
 
