@@ -55,9 +55,6 @@ func get_enemy_unit_at(x: int, y: int):
 	for unit in $EnemyUnits.get_children():
 		if unit.translation.x-0.5 == x && unit.translation.z-0.5 == y:
 			return unit
-
-
-
 	
 
 func get_player_unit_at(x: int, y: int):
@@ -67,7 +64,6 @@ func get_player_unit_at(x: int, y: int):
 
 
 func _process(delta):
-		
 	var pos = get_tile_position();
 	if pos != null:
 		show_marker_at(pos.x, pos.z)
@@ -92,8 +88,44 @@ func set_phase(phase):
 		$EnemyController.set_process(true)
 		$PlayerController.set_process(false)
 		$EnemyController.on_turn_enter()
+	elif phase == TurnPhase.PHASE.COMBAT:
+		$EnemyController.set_process(false)
+		$PlayerController.set_process(false)
+		perform_combat()
 	emit_signal("phase_changed", phase)
-		
+
+func perform_combat():
+	var player_units = $PlayerUnits.get_children() 
+	var enemy_units = $EnemyUnits.get_children()
+	
+	for player_unit in player_units:
+		for nearby_unit in get_units_around(player_unit, enemy_units):
+			perform_attack(player_unit, nearby_unit)
+			yield(get_tree().create_timer(0.5), "timeout")
+			if nearby_unit.health <= 0:
+				enemy_units.remove(enemy_units.find(nearby_unit))
+				nearby_unit.queue_free()
+	
+	for enemy_unit in enemy_units:
+		for nearby_unit in get_units_around(enemy_unit, player_units):
+			perform_attack(enemy_unit, nearby_unit)
+			yield(get_tree().create_timer(0.5), "timeout")
+			if nearby_unit.health <= 0:
+				player_units.remove(player_units.find(nearby_unit))
+				nearby_unit.queue_free()
+	
+	set_phase(TurnPhase.PHASE.PLAYER)
+	
+func perform_attack(from, to):
+	to.emit_damage_particles()
+	to.take_damage(from.attack)
+
+func get_units_around(target, possible_units):
+	var close_units = []
+	for possible_unit in possible_units:
+		if has_node(possible_unit.get_path()) && target.translation.distance_to(possible_unit.translation) <= 1:
+			close_units.push_back(possible_unit)
+	return close_units
 
 func reset_moved_units(node):
 	var units = get_node(node).get_children()
@@ -162,4 +194,4 @@ func _on_PlayerController_end_turn():
 	set_phase(TurnPhase.PHASE.ENEMY)
 
 func _on_EnemyController_end_turn():
-	set_phase(TurnPhase.PHASE.PLAYER)
+	set_phase(TurnPhase.PHASE.COMBAT)

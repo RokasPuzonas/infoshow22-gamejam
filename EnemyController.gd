@@ -27,6 +27,8 @@ func on_turn_enter():
 	var player_units = world.get_node("PlayerUnits").get_children()
 	var targets_per_enemy = assign_targets(enemy_units, player_units)
 	
+	yield(get_tree().create_timer(0.2), "timeout")
+	
 	var gridMap = world.get_node("GridMap")
 	for i in range(len(enemy_units)):
 		var unit = enemy_units[i]

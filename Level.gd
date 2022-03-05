@@ -5,13 +5,17 @@ extends Node
 func _ready():
 	pass # Replace with function body.
 
-
 func _on_World_phase_changed(phase):
+	var turn_label = $"LevelUI/TurnLabel"
+	
 	if phase == TurnPhase.PHASE.PLAYER:
-		$"LevelUI/TurnLabel".visible = true
-		$"LevelUI/TurnLabel".text = "Your turn"
+		turn_label.visible = true
+		turn_label.text = "Your turn"
 	elif phase == TurnPhase.PHASE.ENEMY:
-		$"LevelUI/TurnLabel".visible = true
-		$"LevelUI/TurnLabel".text = "Enemy turn"
+		turn_label.visible = true
+		turn_label.text = "Enemy turn"
+	elif phase == TurnPhase.PHASE.COMBAT:
+		turn_label.visible = true
+		turn_label.text = "Combat phase"
 	else:
-		$"LevelUI/TurnLabel".visible = false
+		turn_label.visible = false
