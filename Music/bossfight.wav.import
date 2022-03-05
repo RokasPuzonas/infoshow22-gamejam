@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/bossfight.wav-7b7ce818f83489b7126db0b9a29c5337.sample"
+
+[deps]
+
+source_file="res://Music/bossfight.wav"
+dest_files=[ "res://.import/bossfight.wav-7b7ce818f83489b7126db0b9a29c5337.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
