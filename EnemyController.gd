@@ -53,6 +53,7 @@ func on_turn_enter():
 			unit.moved = true
 		
 			timer.start()
+			unit.get_node("StepSoundPlayer").play()
 			yield(timer, "timeout")
 	
 
