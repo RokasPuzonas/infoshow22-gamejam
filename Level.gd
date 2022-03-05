@@ -6,7 +6,6 @@ func _ready():
 	pass # Replace with function body.
 
 
-
 func _on_World_phase_changed(phase):
 	if phase == TurnPhase.PHASE.PLAYER:
 		$"LevelUI/TurnLabel".visible = true

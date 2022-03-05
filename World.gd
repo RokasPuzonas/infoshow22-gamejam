@@ -12,7 +12,7 @@ signal phase_changed;
 
 func _ready():
 	set_phase(TurnPhase.PHASE.PLAYER)
-
+	play_dialog("res://assets/Dialog/DialogTutorial.json")
 
 func play_dialog(path):
 	if current_dialog == null:
@@ -57,8 +57,8 @@ func get_enemy_unit_at(x: int, y: int):
 			return unit
 
 
-func _ready():
-	play_dialog("res://assets/Dialog/DialogTutorial.json")
+
+	
 
 func get_player_unit_at(x: int, y: int):
 	for unit in $PlayerUnits.get_children():
