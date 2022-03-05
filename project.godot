@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "MovementPattern",
 "language": "GDScript",
 "path": "res://MovementPattern.gd"
+}, {
+"base": "Reference",
+"class": "TurnPhase",
+"language": "GDScript",
+"path": "res://TurnPhase.gd"
 } ]
 _global_script_class_icons={
-"MovementPattern": ""
+"MovementPattern": "",
+"TurnPhase": ""
 }
 
 [application]

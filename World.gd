@@ -3,16 +3,12 @@ extends Spatial
 onready var Marker = load("res://CursorMarker.tscn")
 var current_marker
 
-enum TURN_PHASE {
-	ENEMY,
-	PLAYER,
-	MUTATION
-}
-
 var current_turn
 
+signal phase_changed;
+
 func _ready():
-	set_phase(TURN_PHASE.PLAYER)
+	set_phase(TurnPhase.PHASE.PLAYER)
 
 func show_marker_at(x: int, y: int):
 	if current_marker == null:
@@ -62,21 +58,26 @@ func _process(delta):
 	else:
 		hide_marker()
 
-	if current_turn == TURN_PHASE.PLAYER && !has_unmoved_units("PlayerUnits"):
-		set_phase(TURN_PHASE.ENEMY)
+	if current_turn == TurnPhase.PHASE.PLAYER && !has_unmoved_units("PlayerUnits"):
+		set_phase(TurnPhase.PHASE.ENEMY)
 
 func set_phase(phase):
+	if current_turn == phase:
+		return
+		
 	current_turn = phase
-	if phase == TURN_PHASE.PLAYER:
+	if phase == TurnPhase.PHASE.PLAYER:
 		reset_moved_units("PlayerUnits")
 		$EnemyController.set_process(false)
 		$PlayerController.set_process(true)
 		$PlayerController.on_turn_enter()
-	elif phase == TURN_PHASE.ENEMY:
+	elif phase == TurnPhase.PHASE.ENEMY:
 		reset_moved_units("EnemyUnits")
 		$EnemyController.set_process(true)
 		$PlayerController.set_process(false)
 		$EnemyController.on_turn_enter()
+	emit_signal("phase_changed", phase)
+		
 
 func reset_moved_units(node):
 	var units = get_node(node).get_children()
@@ -139,10 +140,10 @@ func get_neighours(x: int, y: int, pattern):
 
 
 func _on_EndTurnButton_pressed():
-	set_phase(TURN_PHASE.ENEMY)
+	set_phase(TurnPhase.PHASE.ENEMY)
 
 func _on_PlayerController_end_turn():
-	set_phase(TURN_PHASE.ENEMY)
+	set_phase(TurnPhase.PHASE.ENEMY)
 
 func _on_EnemyController_end_turn():
-	set_phase(TURN_PHASE.PLAYER)
+	set_phase(TurnPhase.PHASE.PLAYER)

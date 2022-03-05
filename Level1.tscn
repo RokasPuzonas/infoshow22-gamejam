@@ -1,13 +1,14 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://meshlib.tres" type="MeshLibrary" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
 [ext_resource path="res://Units/PigeonUnit.tscn" type="PackedScene" id=3]
 [ext_resource path="res://UI/LevelUI.tscn" type="PackedScene" id=4]
-[ext_resource path="res://PlayerController.gd" type="Script" id=5]
+[ext_resource path="res://Level.gd" type="Script" id=5]
 [ext_resource path="res://Units/DogUnit.tscn" type="PackedScene" id=6]
 [ext_resource path="res://EnemyController.gd" type="Script" id=7]
 [ext_resource path="res://Units/BaseUnit.gd" type="Script" id=8]
+[ext_resource path="res://PlayerController.gd" type="Script" id=9]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -15,6 +16,7 @@ background_color = Color( 0.0980392, 0.0980392, 0.0980392, 1 )
 ambient_light_color = Color( 1, 1, 1, 1 )
 
 [node name="Level1" type="Node"]
+script = ExtResource( 5 )
 
 [node name="LevelUI" parent="." instance=ExtResource( 4 )]
 
@@ -22,7 +24,7 @@ ambient_light_color = Color( 1, 1, 1, 1 )
 script = ExtResource( 2 )
 
 [node name="PlayerController" type="Spatial" parent="World"]
-script = ExtResource( 5 )
+script = ExtResource( 9 )
 
 [node name="MoveMarkers" type="Spatial" parent="World/PlayerController"]
 
@@ -74,6 +76,7 @@ script = ExtResource( 8 )
 enemy = true
 
 [connection signal="pressed" from="LevelUI/EndTurnButton" to="World" method="_on_EndTurnButton_pressed"]
+[connection signal="phase_changed" from="World" to="." method="_on_World_phase_changed"]
 [connection signal="end_turn" from="World/PlayerController" to="World" method="_on_PlayerController_end_turn"]
 [connection signal="end_turn" from="World/EnemyController" to="World" method="_on_EnemyController_end_turn"]
 
