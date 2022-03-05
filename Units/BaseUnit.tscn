@@ -10,6 +10,7 @@ flags_unshaded = true
 material = SubResource( 2 )
 
 [node name="BaseUnit" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0467839, 0, 0.113511 )
 script = ExtResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]

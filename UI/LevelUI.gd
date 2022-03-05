@@ -8,6 +8,5 @@ func _ready():
 	pass # Replace with function body.
 
 
-
 func _on_MutationPicker_pick_mutation(mutation):
 	emit_signal("pick_mutation", mutation)
