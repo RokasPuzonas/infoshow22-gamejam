@@ -29,9 +29,9 @@ func _ready():
 func update_stage_sprite():
 	var shader: SpatialMaterial = $MeshInstance.mesh.surface_get_material(0)
 	if stage == 0:
-		shader.albedo_texture = stage2_texture
+		shader.albedo_texture = stage0_texture
 	elif stage == 1:
-		shader.albedo_texture = stage2_texture
+		shader.albedo_texture = stage1_texture
 	else:
 		shader.albedo_texture = stage2_texture
 
