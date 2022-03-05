@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://meshlib.tres" type="MeshLibrary" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
 [ext_resource path="res://Units/PigeonUnit.tscn" type="PackedScene" id=3]
 [ext_resource path="res://UI/MutationPicker.tscn" type="PackedScene" id=4]
 [ext_resource path="res://TestMutateButton.gd" type="Script" id=5]
+[ext_resource path="res://Units/DogUnit.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -57,3 +58,6 @@ __meta__ = {
 
 [node name="PigeonUnit" parent="World/Units" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5 )
+
+[node name="DogUnit" parent="World/Units" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.5, 0.5 )

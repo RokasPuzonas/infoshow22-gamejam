@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Units/BaseUnit.tscn" type="PackedScene" id=1]
-[ext_resource path="res://assets/textures/dog.png" type="Texture" id=2]
+[ext_resource path="res://assets/textures/pigeon.png" type="Texture" id=2]
 [ext_resource path="res://assets/textures/pigeon1.png" type="Texture" id=3]
 [ext_resource path="res://assets/textures/pigeon2.png" type="Texture" id=4]
 
@@ -11,4 +11,4 @@ stage1_texture = ExtResource( 3 )
 stage2_texture = ExtResource( 4 )
 
 [node name="MeshInstance" parent="." index="0"]
-transform = Transform( 0.707107, 0.353553, -0.612372, 0, 0.866025, 0.5, 0.707107, -0.353553, 0.612372, 0, 0.5, 0 )
+transform = Transform( 0.707107, 0.353553, -0.612372, 0, 0.866025, 0.499999, 0.707107, -0.353553, 0.612372, 0, 0.5, 0 )
