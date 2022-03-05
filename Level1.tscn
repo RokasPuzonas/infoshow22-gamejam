@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://meshlib.tres" type="MeshLibrary" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
@@ -8,35 +8,19 @@
 [ext_resource path="res://Units/DogUnit.tscn" type="PackedScene" id=6]
 [ext_resource path="res://PlayerController.gd" type="Script" id=7]
 [ext_resource path="res://EnemyController.gd" type="Script" id=8]
-[ext_resource path="res://UIButton.tscn" type="PackedScene" id=9]
-[ext_resource path="res://MenuButton.gd" type="Script" id=10]
-[ext_resource path="res://ResumeButton.gd" type="Script" id=11]
+[ext_resource path="res://Level2.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
-background_color = Color( 0.0980392, 0.0980392, 0.0980392, 1 )
+background_color = Color( 0.14902, 0.137255, 0.180392, 1 )
 ambient_light_color = Color( 1, 1, 1, 1 )
 
 [node name="Level1" type="Node"]
 script = ExtResource( 5 )
+next_scene = ExtResource( 12 )
 
 [node name="LevelUI" parent="." instance=ExtResource( 4 )]
 script = null
-
-[node name="PauseMenu" type="ColorRect" parent="LevelUI"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.556863 )
-
-[node name="Quit" parent="LevelUI/PauseMenu" instance=ExtResource( 9 )]
-margin_top = 0.0
-margin_bottom = 60.0
-text = "Main Menu"
-script = ExtResource( 10 )
-
-[node name="Resume" parent="LevelUI/PauseMenu" instance=ExtResource( 9 )]
-script = ExtResource( 11 )
 
 [node name="World" type="Spatial" parent="."]
 script = ExtResource( 2 )

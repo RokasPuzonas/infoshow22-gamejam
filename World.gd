@@ -15,7 +15,9 @@ func _ready():
 	get_tree().paused = false
 	
 	set_phase(TurnPhase.PHASE.PLAYER)
-	play_dialog("res://assets/Dialog/DialogTutorial.json")
+	if get_parent().name == "Level1":
+		play_dialog("res://assets/Dialog/DialogTutorial.json")
+	
 
 
 func play_dialog(path):
@@ -204,7 +206,8 @@ func get_neighours(x: int, y: int, pattern):
 	return positions
 
 func _on_EndTurnButton_pressed():
-	set_phase(TurnPhase.PHASE.ENEMY)
+	if current_turn == TurnPhase.PHASE.PLAYER:
+		set_phase(TurnPhase.PHASE.ENEMY)
 
 func _on_PlayerController_end_turn():
 	set_phase(TurnPhase.PHASE.ENEMY)
