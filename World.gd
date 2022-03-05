@@ -11,14 +11,17 @@ var current_turn
 signal phase_changed;
 
 func _ready():
+	get_tree().paused = false
+	
 	set_phase(TurnPhase.PHASE.PLAYER)
 	play_dialog("res://assets/Dialog/DialogTutorial.json")
 
+
 func play_dialog(path):
-	if current_dialog == null:
-		current_dialog = Dialog.instance()
-		current_dialog.dialogPath = path
-		add_child(current_dialog)
+	
+	current_dialog = Dialog.instance()
+	current_dialog.dialogPath = path
+	add_child(current_dialog)
 
 func show_marker_at(x: int, y: int):
 	if current_marker == null:
@@ -27,6 +30,7 @@ func show_marker_at(x: int, y: int):
 	current_marker.visible = true
 	current_marker.translation = Vector3(x, 1, y+1)
 
+	
 func hide_marker():
 	if current_marker:
 		current_marker.visible = false
@@ -67,7 +71,9 @@ func get_player_unit_at(x: int, y: int):
 
 
 func _process(delta):
-		
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		get_tree().change_scene("res://LoseScreen.tscn")
 	var pos = get_tile_position();
 	if pos != null:
 		show_marker_at(pos.x, pos.z)
@@ -76,6 +82,7 @@ func _process(delta):
 
 	if current_turn == TurnPhase.PHASE.PLAYER && !has_unmoved_units("PlayerUnits"):
 		set_phase(TurnPhase.PHASE.ENEMY)
+
 
 func set_phase(phase):
 	if current_turn == phase:

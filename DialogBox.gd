@@ -16,7 +16,7 @@ func _ready():
  
 func _process(_delta):
 	$Continue.visible = finished
-	if Input.is_action_just_pressed("mouse_press"):
+	if Input.is_action_just_pressed("mouse_press_right"):
 		if finished:
 			nextPhrase()
 		else:

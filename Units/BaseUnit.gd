@@ -23,6 +23,7 @@ func _ready():
 	
 	update_stage_sprite();
 
+	
 func update_stage_sprite():
 	if stage == 0:
 		$MeshInstance.material_override.albedo_texture = stage0_texture
