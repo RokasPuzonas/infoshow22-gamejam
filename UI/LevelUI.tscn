@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://UI/MutationPicker.tscn" type="PackedScene" id=2]
 [ext_resource path="res://theme.tres" type="Theme" id=3]
@@ -103,5 +103,3 @@ color = Color( 0, 0, 0, 0 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Fade"]
 anims/Fade_in = SubResource( 1 )
 anims/RESET = SubResource( 2 )
-
-[connection signal="pick_mutation" from="MutationPicker" to="." method="_on_MutationPicker_pick_mutation"]
