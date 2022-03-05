@@ -1,6 +1,8 @@
 extends Spatial
 
 onready var Marker = load("res://CursorMarker.tscn")
+onready var Dialog = load("res://Dialog.tscn")
+var current_dialog
 onready var timer = $Timer
 var current_marker
 
@@ -14,6 +16,12 @@ enum TURN{
 }
 
 var current_turn = TURN.player
+func play_dialog(path):
+	if current_dialog == null:
+		current_dialog = Dialog.instance()
+		current_dialog.dialogPath = path
+		add_child(current_dialog)
+
 func show_marker_at(x: int, y: int):
 	if current_marker == null:
 		current_marker = Marker.instance()
@@ -63,8 +71,10 @@ func deselect_unit():
 	for marker in $MoveMarkers.get_children():
 		$MoveMarkers.remove_child(marker)
 
-
+func _ready():
+	play_dialog("res://assets/Dialog/DialogTutorial.json")
 func _process(delta):
+		
 	var pos = get_tile_position();
 	if pos != null:
 		var unit_on_mouse = get_unit_at(pos.x, pos.z)
@@ -96,15 +106,12 @@ func _process(delta):
 	
 func _enemy_move():
 	var units = get_node("EnemyUnits").get_children()
-
-	
 	for unit in units:
 		timer.start()
 		yield(timer, "timeout")
 		unit.translation = Vector3(0.5+unit.translation.x, 0.5, 0.5+unit.translation.z)
-		
-	
 		unit.moved = true
+		
 func _reset_moved(node):
 	var units = get_node(node).get_children()
 	for unit in units:
