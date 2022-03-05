@@ -48,6 +48,7 @@ func move_selected(pos):
 	selected_unit.translation = Vector3(0.5+pos.x, 0.5, 0.5+pos.z)
 	selected_unit.moved = true
 	selected_unit.get_node("UnmovedMarker").queue_free()
+	selected_unit.get_node("StepSoundPlayer").play()
 	deselect_unit()
 	return true
 
