@@ -5,7 +5,7 @@ export var attack = 10
 export var movement_range = 3
 export var movement_pattern = MovementPattern.PATTERN.NORMAL
 
-var stage = 2;
+var stage = 0;
 
 export(Texture) var stage0_texture;
 export(Texture) var stage1_texture;
