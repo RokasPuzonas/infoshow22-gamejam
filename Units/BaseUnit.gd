@@ -66,6 +66,9 @@ func take_damage(damage):
 	
 	var health_color = Color("1c1c1c").linear_interpolate(Color("e90000"), float(health)/max_health)
 	$Healthbar.material_override.albedo_color = health_color
+	
+	if damage > 0:
+		$AudioStreamPlayer.play()
 
 func emit_damage_particles():
 	$DamageParticles.emitting = true
