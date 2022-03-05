@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Units/BaseUnit.gd" type="Script" id=1]
 [ext_resource path="res://assets/kenny-particles/particlePack_1.1/PNG (Transparent)/scratch_01.png" type="Texture" id=2]
+[ext_resource path="res://assets/audio/hit1.wav" type="AudioStream" id=3]
 
 [sub_resource type="SpatialMaterial" id=2]
 flags_transparent = true
@@ -72,3 +73,7 @@ randomness = 0.33
 visibility_aabb = AABB( -2.10538, -4, -4, 4.21077, 8, 8 )
 process_material = SubResource( 6 )
 draw_pass_1 = SubResource( 4 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+pitch_scale = 1.91

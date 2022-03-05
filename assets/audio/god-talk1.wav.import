@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/god-talk1.wav-323cf2af6eec0b117654aea37e827bfb.sample"
+
+[deps]
+
+source_file="res://assets/audio/god-talk1.wav"
+dest_files=[ "res://.import/god-talk1.wav-323cf2af6eec0b117654aea37e827bfb.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0
