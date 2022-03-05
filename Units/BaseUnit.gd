@@ -6,7 +6,7 @@ export var movement_range = 3
 export(MovementPattern.PATTERN) var movement_pattern = MovementPattern.PATTERN.NORMAL
 export var enemy = false
 export var moved = false
-
+ 
 var stage = 0;
 
 export(Texture) var stage0_texture;

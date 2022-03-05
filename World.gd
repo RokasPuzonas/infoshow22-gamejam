@@ -3,7 +3,6 @@ extends Spatial
 onready var Marker = load("res://CursorMarker.tscn")
 onready var Dialog = load("res://Dialog.tscn")
 var current_dialog
-onready var timer = $Timer
 var current_marker
 
 var current_turn

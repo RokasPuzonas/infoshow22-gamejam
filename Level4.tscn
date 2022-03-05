@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://meshlib.tres" type="MeshLibrary" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
@@ -11,6 +11,9 @@
 [ext_resource path="res://assets/textures/tentacle_segment.png" type="Texture" id=9]
 [ext_resource path="res://assets/textures/tentacle_end2.png" type="Texture" id=10]
 [ext_resource path="res://assets/textures/tentacle_end3.png" type="Texture" id=11]
+[ext_resource path="res://PlayerController.gd" type="Script" id=12]
+[ext_resource path="res://EnemyController.gd" type="Script" id=13]
+[ext_resource path="res://Level.gd" type="Script" id=14]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -68,8 +71,8 @@ albedo_texture = ExtResource( 11 )
 material = SubResource( 14 )
 size = Vector2( 4, 8 )
 
-[node name="Level1" type="Node"]
-script = ExtResource( 5 )
+[node name="Level4" type="Node"]
+script = ExtResource( 14 )
 
 [node name="LevelUI" parent="." instance=ExtResource( 4 )]
 
@@ -77,13 +80,13 @@ script = ExtResource( 5 )
 script = ExtResource( 2 )
 
 [node name="EnemyController" type="Node" parent="World"]
-script = ExtResource( 8 )
+script = ExtResource( 13 )
 
 [node name="Timer" type="Timer" parent="World/EnemyController"]
 one_shot = true
 
 [node name="PlayerController" type="Spatial" parent="World"]
-script = ExtResource( 7 )
+script = ExtResource( 12 )
 
 [node name="MoveMarkers" type="Spatial" parent="World/PlayerController"]
 
@@ -161,3 +164,10 @@ material/0 = null
 transform = Transform( 0.965926, 0, -0.258819, 0.12941, 0.866025, 0.482963, 0.224144, -0.5, 0.836516, -6, 0, -7.5 )
 mesh = SubResource( 15 )
 material/0 = null
+
+[connection signal="pressed" from="LevelUI/EndTurnButton" to="World" method="_on_EndTurnButton_pressed"]
+[connection signal="phase_changed" from="World" to="." method="_on_World_phase_changed"]
+[connection signal="end_turn" from="World/EnemyController" to="World" method="_on_EnemyController_end_turn"]
+[connection signal="end_turn" from="World/PlayerController" to="World" method="_on_PlayerController_end_turn"]
+
+[editable path="LevelUI"]

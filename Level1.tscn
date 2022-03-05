@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://meshlib.tres" type="MeshLibrary" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://UI/LevelUI.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Level.gd" type="Script" id=5]
 [ext_resource path="res://Units/DogUnit.tscn" type="PackedScene" id=6]
-[ext_resource path="res://PlayerController.gd" type="Script" id=7]
 [ext_resource path="res://EnemyController.gd" type="Script" id=8]
 
 [sub_resource type="Environment" id=1]
@@ -29,12 +28,11 @@ script = ExtResource( 8 )
 one_shot = true
 
 [node name="PlayerController" type="Spatial" parent="World"]
-script = ExtResource( 7 )
 
 [node name="MoveMarkers" type="Spatial" parent="World/PlayerController"]
 
 [node name="Camera" type="Camera" parent="World"]
-transform = Transform( 0.707107, 0.353553, -0.612372, 0, 0.866026, 0.5, 0.707107, -0.353553, 0.612372, -4, 4, 1 )
+transform = Transform( 0.707107, 0.353553, -0.612373, 0, 0.866026, 0.499999, 0.707107, -0.353553, 0.612373, -5.985, 5.365, 3 )
 environment = SubResource( 1 )
 projection = 1
 fov = 80.4707
@@ -74,6 +72,5 @@ enemy = true
 [connection signal="pressed" from="LevelUI/EndTurnButton" to="World" method="_on_EndTurnButton_pressed"]
 [connection signal="phase_changed" from="World" to="." method="_on_World_phase_changed"]
 [connection signal="end_turn" from="World/EnemyController" to="World" method="_on_EnemyController_end_turn"]
-[connection signal="end_turn" from="World/PlayerController" to="World" method="_on_PlayerController_end_turn"]
 
 [editable path="LevelUI"]
