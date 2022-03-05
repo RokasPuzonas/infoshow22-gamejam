@@ -20,6 +20,7 @@ script = ExtResource( 5 )
 next_scene = ExtResource( 12 )
 
 [node name="LevelUI" parent="." instance=ExtResource( 4 )]
+script = null
 
 [node name="World" type="Spatial" parent="."]
 script = ExtResource( 2 )
