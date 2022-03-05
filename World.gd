@@ -1,19 +1,25 @@
 extends Spatial
 
 onready var Marker = load("res://CursorMarker.tscn")
+onready var Dialog = load("res://Dialog.tscn")
+var current_dialog
 onready var timer = $Timer
 var current_marker
 
-var selected_unit;
-var available_moves;
+var current_turn
 
-export var end_turn = false
-enum TURN{
-	enemy
-	player
-}
+signal phase_changed;
 
-var current_turn = TURN.player
+func _ready():
+	set_phase(TurnPhase.PHASE.PLAYER)
+	play_dialog("res://assets/Dialog/DialogTutorial.json")
+
+func play_dialog(path):
+	if current_dialog == null:
+		current_dialog = Dialog.instance()
+		current_dialog.dialogPath = path
+		add_child(current_dialog)
+
 func show_marker_at(x: int, y: int):
 	if current_marker == null:
 		current_marker = Marker.instance()
@@ -42,100 +48,96 @@ func get_tile_position():
 func is_blocked(x, y):
 	return $GridMap.get_cell_item(x, 0, y) == -1 || \
 			$GridMap.get_cell_item(x, 1, y) == 3 || \
-			get_unit_at(x, y) != null
+			get_enemy_unit_at(x, y) != null || \
+			get_player_unit_at(x, y) != null
 
-func get_unit_at(x: int, y: int):
+func get_enemy_unit_at(x: int, y: int):
+	for unit in $EnemyUnits.get_children():
+		if unit.translation.x-0.5 == x && unit.translation.z-0.5 == y:
+			return unit
+	
+
+func get_player_unit_at(x: int, y: int):
 	for unit in $PlayerUnits.get_children():
 		if unit.translation.x-0.5 == x && unit.translation.z-0.5 == y:
 			return unit
 
-func select_unit(unit):
-	selected_unit = unit
-	var Marker = load("res://MovementMarker.tscn")
-
-	available_moves = []
-	var map_pos = $GridMap.world_to_map(unit.translation)
-	for tile in get_available_movement_tiles(map_pos.x, map_pos.z, unit.movement_range, unit.movement_pattern):
-		available_moves.push_front(tile)
-
-	$MoveMarkers.translation = Vector3(0.5, 0.5, 0.5)
-	for tile in available_moves:
-		var marker = Marker.instance()
-		marker.translation = Vector3(tile.x, 0, tile.y)
-		$MoveMarkers.add_child(marker)
-
-func move_selected(pos):
-	if !available_moves.has(Vector2(pos.x, pos.z)):
-		return false
-		
-	selected_unit.translation = Vector3(0.5+pos.x, 0.5, 0.5+pos.z)
-	selected_unit.moved = true
-	deselect_unit()
-	return true
-
-func deselect_unit():
-	selected_unit = null
-	for marker in $MoveMarkers.get_children():
-		$MoveMarkers.remove_child(marker)
 
 func _process(delta):
-	if Input.is_action_just_pressed("ui_cancel"):
-		deselect_unit()
-
 	var pos = get_tile_position();
 	if pos != null:
-		var unit_on_mouse = get_unit_at(pos.x, pos.z)
-		if Input.is_action_just_pressed("mouse_press"):
-			if selected_unit == null && unit_on_mouse != null and not unit_on_mouse.enemy and not unit_on_mouse.moved:
-				select_unit(unit_on_mouse)
-			elif selected_unit != null:
-				if !move_selected(pos):
-					deselect_unit()
-
 		show_marker_at(pos.x, pos.z)
 	else:
 		hide_marker()
 
-	if not end_turn:
-		if current_turn == TURN.player:
-			_reset_moved("EnemyUnits")
-			_check_moves("PlayerUnits", TURN.enemy)
+	if current_turn == TurnPhase.PHASE.PLAYER && !has_unmoved_units("PlayerUnits"):
+		set_phase(TurnPhase.PHASE.ENEMY)
 
-		elif current_turn == TURN.enemy:
-			_reset_moved("PlayerUnits")
-			_enemy_move()
-			current_turn = TURN.player
-	elif current_turn == TURN.player:
-		_reset_moved("PlayerUnits")
-		_enemy_move()
-		end_turn = false
+func set_phase(phase):
+	if current_turn == phase:
+		return
+		
+	current_turn = phase
+	if phase == TurnPhase.PHASE.PLAYER:
+		reset_moved_units("PlayerUnits")
+		$EnemyController.set_process(false)
+		$PlayerController.set_process(true)
+		$PlayerController.on_turn_enter()
+	elif phase == TurnPhase.PHASE.ENEMY:
+		reset_moved_units("EnemyUnits")
+		$EnemyController.set_process(true)
+		$PlayerController.set_process(false)
+		$EnemyController.on_turn_enter()
+	elif phase == TurnPhase.PHASE.COMBAT:
+		$EnemyController.set_process(false)
+		$PlayerController.set_process(false)
+		perform_combat()
+	emit_signal("phase_changed", phase)
 
-func _enemy_move():
-	var units = get_node("EnemyUnits").get_children()
+func perform_combat():
+	var player_units = $PlayerUnits.get_children() 
+	var enemy_units = $EnemyUnits.get_children()
+	
+	for player_unit in player_units:
+		for nearby_unit in get_units_around(player_unit, enemy_units):
+			perform_attack(player_unit, nearby_unit)
+			yield(get_tree().create_timer(0.5), "timeout")
+			if nearby_unit.health <= 0:
+				enemy_units.remove(enemy_units.find(nearby_unit))
+				nearby_unit.queue_free()
+	
+	for enemy_unit in enemy_units:
+		for nearby_unit in get_units_around(enemy_unit, player_units):
+			perform_attack(enemy_unit, nearby_unit)
+			yield(get_tree().create_timer(0.5), "timeout")
+			if nearby_unit.health <= 0:
+				player_units.remove(player_units.find(nearby_unit))
+				nearby_unit.queue_free()
+	
+	set_phase(TurnPhase.PHASE.PLAYER)
+	
+func perform_attack(from, to):
+	to.emit_damage_particles()
+	to.take_damage(from.attack)
 
-	for unit in units:
-		timer.start()
-		var map_pos = $GridMap.world_to_map(unit.translation)
-		var available_tiles = get_available_movement_tiles(map_pos.x, map_pos.z, unit.movement_range, unit.movement_pattern)
-		var tile = available_tiles[randi() % available_tiles.size()]
-		unit.translation = Vector3(tile.x+0.5, 0.5, tile.y+0.5)
-		unit.moved = true
-		yield(timer, "timeout")
+func get_units_around(target, possible_units):
+	var close_units = []
+	for possible_unit in possible_units:
+		if has_node(possible_unit.get_path()) && target.translation.distance_to(possible_unit.translation) <= 1:
+			close_units.push_back(possible_unit)
+	return close_units
 
-func _reset_moved(node):
+func reset_moved_units(node):
 	var units = get_node(node).get_children()
 	for unit in units:
 		unit.moved = false
 
-func _check_moves(node, next_turn):
+func has_unmoved_units(node):
 	var units = get_node(node).get_children()
-	var moved_count = 0
 	for unit in units:
-		if unit.moved:
-			moved_count += 1
-	if len(units) == moved_count:
-		current_turn = next_turn
-
+		if !unit.moved:
+			return true
+	return false
 
 func get_available_movement_tiles(x: int, y: int, move_range: int, move_pattern):
 	var all_tiles = []
@@ -156,46 +158,40 @@ func get_available_movement_tiles(x: int, y: int, move_range: int, move_pattern)
 	return all_tiles
 
 func get_neighours(x: int, y: int, pattern):
+	var offsets = []
 	match pattern:
-		MovementPattern.PATTERN.NORMAL:
-			return get_normal_neighbours(x, y)
 		MovementPattern.PATTERN.DIAGONAL:
-			return get_diagonal_neighbours(x, y)
+			offsets = [
+				Vector2(-1, -1), Vector2(+1, -1),
+				Vector2(+1, +1), Vector2(-1, +1)
+			]
 		MovementPattern.PATTERN.HORSE:
-			return get_horse_neighbours(x, y)
+			offsets = [
+				Vector2(-1, y-2), Vector2(-2, -1),
+				Vector2(-1, y+2), Vector2(-2, +1),
+				Vector2(+1, y-2), Vector2(+2, -1),
+				Vector2(+2, y+1), Vector2(+1, +2),
+			]
 		MovementPattern.PATTERN.LEFT_FORWARD:
-			return get_left_forward_neighbours(x, y)
+			offsets = [
+				Vector2(-1, 0), Vector2(0, -1)
+			]
+		_: # aka, MovementPattern.PATTERN.NORMAL
+			offsets = [
+				Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1)
+			]
+	
+	var positions = []
+	for offset in offsets:
+		positions.push_back(Vector2(x, y) + offset)
+	return positions
 
-func get_normal_neighbours(x: int, y: int):
-	return [
-		Vector2(x-1, y),
-		Vector2(x, y-1),
-		Vector2(x, y+1),
-		Vector2(x+1, y)
-	]
 
-func get_left_forward_neighbours(x: int, y: int):
-	return [
-		Vector2(x-1, y),
-		Vector2(x, y-1)
-	]
+func _on_EndTurnButton_pressed():
+	set_phase(TurnPhase.PHASE.ENEMY)
 
-func get_diagonal_neighbours(x, y):
-	return [
-		Vector2(x-1, y-1),
-		Vector2(x+1, y-1),
-		Vector2(x+1, y+1),
-		Vector2(x-1, y+1)
-	]
+func _on_PlayerController_end_turn():
+	set_phase(TurnPhase.PHASE.ENEMY)
 
-func get_horse_neighbours(x, y):
-	return [
-		Vector2(x-1, y-2),
-		Vector2(x-2, y-1),
-		Vector2(x-1, y+2),
-		Vector2(x-2, y+1),
-		Vector2(x+1, y-2),
-		Vector2(x+2, y-1),
-		Vector2(x+2, y+1),
-		Vector2(x+1, y+2),
-	]
+func _on_EnemyController_end_turn():
+	set_phase(TurnPhase.PHASE.COMBAT)
