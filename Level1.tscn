@@ -1,12 +1,12 @@
 [gd_scene load_steps=13 format=2]
 
-
 [ext_resource path="res://meshlib.tres" type="MeshLibrary" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
 [ext_resource path="res://Units/PigeonUnit.tscn" type="PackedScene" id=3]
 [ext_resource path="res://UI/LevelUI.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Level.gd" type="Script" id=5]
 [ext_resource path="res://Units/DogUnit.tscn" type="PackedScene" id=6]
+[ext_resource path="res://PlayerController.gd" type="Script" id=7]
 [ext_resource path="res://EnemyController.gd" type="Script" id=8]
 [ext_resource path="res://UIButton.tscn" type="PackedScene" id=9]
 [ext_resource path="res://MenuButton.gd" type="Script" id=10]
@@ -47,6 +47,7 @@ script = ExtResource( 8 )
 one_shot = true
 
 [node name="PlayerController" type="Spatial" parent="World"]
+script = ExtResource( 7 )
 
 [node name="MoveMarkers" type="Spatial" parent="World/PlayerController"]
 
@@ -91,5 +92,6 @@ enemy = true
 [connection signal="pressed" from="LevelUI/EndTurnButton" to="World" method="_on_EndTurnButton_pressed"]
 [connection signal="phase_changed" from="World" to="." method="_on_World_phase_changed"]
 [connection signal="end_turn" from="World/EnemyController" to="World" method="_on_EnemyController_end_turn"]
+[connection signal="end_turn" from="World/PlayerController" to="World" method="_on_PlayerController_end_turn"]
 
 [editable path="LevelUI"]
