@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://meshlib.tres" type="MeshLibrary" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://UI/MutationPicker.tscn" type="PackedScene" id=4]
 [ext_resource path="res://TestMutateButton.gd" type="Script" id=5]
 [ext_resource path="res://Units/DogUnit.tscn" type="PackedScene" id=6]
+[ext_resource path="res://EndTurnButton.gd" type="Script" id=7]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -21,6 +22,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="EndTurnButton" type="Button" parent="UI"]
+margin_left = 28.0
+margin_top = 106.0
+margin_right = 161.0
+margin_bottom = 147.0
+text = "End Turn"
+script = ExtResource( 7 )
+
 [node name="MutationPicker" parent="UI" instance=ExtResource( 4 )]
 
 [node name="TestMutateButton" type="Button" parent="UI"]
@@ -33,6 +42,9 @@ script = ExtResource( 5 )
 
 [node name="World" type="Spatial" parent="."]
 script = ExtResource( 2 )
+
+[node name="Timer" type="Timer" parent="World"]
+one_shot = true
 
 [node name="Camera" type="Camera" parent="World"]
 transform = Transform( 0.707107, 0.353553, -0.612372, 0, 0.866026, 0.5, 0.707107, -0.353553, 0.612372, -4, 4, 1 )
@@ -54,10 +66,19 @@ __meta__ = {
 "_editor_floor_": Vector3( 0, -1, 0 )
 }
 
-[node name="Units" type="Node" parent="World"]
+[node name="PlayerUnits" type="Node" parent="World"]
 
-[node name="PigeonUnit" parent="World/Units" instance=ExtResource( 3 )]
+[node name="PigeonUnit2" parent="World/PlayerUnits" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0.5, -4.5 )
+
+[node name="PigeonUnit" parent="World/PlayerUnits" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5 )
 
-[node name="DogUnit" parent="World/Units" instance=ExtResource( 6 )]
+[node name="EnemyUnits" type="Node" parent="World"]
+
+[node name="PigeonUnit" parent="World/EnemyUnits" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -6 )
+
+[node name="DogUnit" parent="World/EnemyUnits" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.5, 0.5 )
+enemy = true

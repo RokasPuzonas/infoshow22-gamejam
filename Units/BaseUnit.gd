@@ -4,6 +4,8 @@ export var max_health = 100
 export var attack = 10
 export var movement_range = 3
 export var movement_pattern = MovementPattern.PATTERN.NORMAL
+export var enemy = false
+export var moved = false
 
 var stage = 0;
 
