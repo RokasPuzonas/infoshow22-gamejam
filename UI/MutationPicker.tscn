@@ -13,13 +13,16 @@ __meta__ = {
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.329412, 0.329412, 0.329412, 0.878431 )
+color = Color( 0, 0, 0, 0.556863 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label" type="Label" parent="."]
 anchor_right = 1.0
 margin_top = 89.0
 margin_bottom = 14.0
-text = "Pick your poison"
+text = "Mutation time! Pick your poison..."
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
