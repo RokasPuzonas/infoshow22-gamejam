@@ -1,3 +1,4 @@
 extends Button
 func _pressed():
-	get_tree().change_scene("res://Level1.tscn")
+	get_parent().get_parent().get_parent().get_parent().get_parent().play_anim = true
+	

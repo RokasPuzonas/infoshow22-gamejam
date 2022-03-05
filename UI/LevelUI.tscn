@@ -1,9 +1,42 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://TestMutateButton.gd" type="Script" id=1]
 [ext_resource path="res://UI/MutationPicker.tscn" type="PackedScene" id=2]
 [ext_resource path="res://theme.tres" type="Theme" id=3]
 [ext_resource path="res://UI/LevelUI.gd" type="Script" id=4]
+[ext_resource path="res://UIButton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://MenuButton.gd" type="Script" id=6]
+[ext_resource path="res://ResumeButton.gd" type="Script" id=7]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Fade_in"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ) ]
+}
 
 [node name="LevelUI" type="Control"]
 anchor_right = 1.0
@@ -37,5 +70,30 @@ text = "End Turn"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="PauseMenu" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.556863 )
+
+[node name="Quit" parent="PauseMenu" instance=ExtResource( 5 )]
+margin_top = 0.0
+margin_bottom = 60.0
+text = "Main Menu"
+script = ExtResource( 6 )
+
+[node name="Resume" parent="PauseMenu" instance=ExtResource( 5 )]
+script = ExtResource( 7 )
+
+[node name="Fade" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 0 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Fade"]
+anims/Fade_in = SubResource( 1 )
+anims/RESET = SubResource( 2 )
 
 [connection signal="pick_mutation" from="MutationPicker" to="." method="_on_MutationPicker_pick_mutation"]
