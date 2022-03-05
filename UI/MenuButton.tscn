@@ -9,8 +9,6 @@ script/source = "extends Button
 export var path = \"\"
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	connect(\"pressed\", self, \"on_Button_pressed\")
 
 func _pressed():
 	if path != \"\":

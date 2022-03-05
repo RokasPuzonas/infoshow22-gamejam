@@ -21,10 +21,10 @@ func _ready():
 	var Marker = load("res://MovementMarker.tscn")
 	var available_tiles = get_available_movement_tiles(0, 0, 2, MovementPattern.PATTERN.NORMAL)
 
-	for tile in available_tiles:
-		var marker = Marker.instance()
-		marker.translation = Vector3(tile.x, 0.1, tile.y)
-		add_child(marker)
+#	for tile in available_tiles:
+#		var marker = Marker.instance()
+#		marker.translation = Vector3(tile.x, 0.1, tile.y)
+#		add_child(marker)
 
 func update_stage_sprite():
 	var shader: SpatialMaterial = $MeshInstance.mesh.surface_get_material(0)
