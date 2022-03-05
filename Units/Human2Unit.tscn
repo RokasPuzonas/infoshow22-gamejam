@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Units/BaseUnit.gd" type="Script" id=1]
 [ext_resource path="res://assets/kenny-particles/particlePack_1.1/PNG (Transparent)/scratch_01.png" type="Texture" id=2]
 [ext_resource path="res://assets/audio/hit1.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/textures/characters/human2.png" type="Texture" id=4]
 
 [sub_resource type="SpatialMaterial" id=2]
 flags_transparent = true
@@ -50,7 +51,9 @@ hue_variation_random = 0.02
 [node name="BaseUnit" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0467839, 0, 0.113511 )
 script = ExtResource( 1 )
-max_health = 30
+stage0_texture = ExtResource( 4 )
+stage1_texture = ExtResource( 4 )
+stage2_texture = ExtResource( 4 )
 
 [node name="Sprite" type="MeshInstance" parent="."]
 transform = Transform( 0.707107, 0.353553, -0.612373, 0, 0.866026, 0.499999, 0.707107, -0.353553, 0.612373, 0, 0.5, 0 )

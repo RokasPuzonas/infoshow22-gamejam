@@ -4,8 +4,8 @@ export(int) var mutation_count = 3
 onready var tween_out = get_node("Tween")
 
 var all_mutations = [
-	#load("res://Mutations/RangeMutation.tscn"),
-	#load("res://Mutations/StrengthMutation.tscn"),
+	load("res://Mutations/RangeMutation.tscn"),
+	load("res://Mutations/StrengthMutation.tscn"),
 	load("res://Mutations/VitalityMutation.tscn")
 ]
 
