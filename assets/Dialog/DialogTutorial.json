@@ -1,10 +1,22 @@
 [
 	{
-		"Name": "????",
-		"Text": "Hi! Thanks for agreeing to play this little game of mine."
+		"Name": "???",
+		"Text": "Greetings, human. I am glad you agreed to participate in my little game."
 	},
 	{
-		"Name": "Game Master",
-		"Text": "Oh, I didn't ask you to? Well, too bad. You can call me Game Master."
+		"Name": "???",
+		"Text": "Well, you might not have agreed, but you ignored all those warnings..."
+	},
+	{
+		"Name": "???",
+		"Text": "Anyway, the game is rather simple."
+	},
+	{
+		"Name": "???",
+		"Text": "I grant you an army of sorts, you use them to kill the townsfolk."
+	},
+	{
+		"Name": "???",
+		"Text": "In case you do well, I may grant you wishes that will make your newly gained followers transform into perfection."
 	}
 ]
