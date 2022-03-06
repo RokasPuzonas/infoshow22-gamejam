@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Units/BaseUnit.gd" type="Script" id=1]
 [ext_resource path="res://assets/kenny-particles/particlePack_1.1/PNG (Transparent)/scratch_01.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/textures/characters/cow1.png" type="Texture" id=4]
 [ext_resource path="res://assets/textures/characters/cow2.png" type="Texture" id=5]
 [ext_resource path="res://assets/textures/characters/cow.png" type="Texture" id=6]
+[ext_resource path="res://assets/audio/step.wav" type="AudioStream" id=7]
 
 [sub_resource type="SpatialMaterial" id=2]
 flags_transparent = true
@@ -53,6 +54,9 @@ hue_variation_random = 0.02
 [node name="BaseUnit" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0467839, 0, 0.113511 )
 script = ExtResource( 1 )
+max_health = 30
+attack = 15
+movement_range = 2
 stage0_texture = ExtResource( 6 )
 stage1_texture = ExtResource( 4 )
 stage2_texture = ExtResource( 5 )
@@ -82,4 +86,8 @@ draw_pass_1 = SubResource( 4 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
+pitch_scale = 1.91
+
+[node name="StepSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
 pitch_scale = 1.91

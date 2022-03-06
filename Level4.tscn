@@ -1,11 +1,11 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://meshlib.tres" type="MeshLibrary" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
 [ext_resource path="res://Units/PigeonUnit.tscn" type="PackedScene" id=3]
 [ext_resource path="res://UI/LevelUI.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/textures/godinscene.png" type="Texture" id=5]
-[ext_resource path="res://Units/DogUnit.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Units/Human1Unit.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/textures/tentacle.png" type="Texture" id=7]
 [ext_resource path="res://assets/textures/tentacle_end.png" type="Texture" id=8]
 [ext_resource path="res://assets/textures/tentacle_segment.png" type="Texture" id=9]
@@ -14,6 +14,9 @@
 [ext_resource path="res://PlayerController.gd" type="Script" id=12]
 [ext_resource path="res://EnemyController.gd" type="Script" id=13]
 [ext_resource path="res://Level.gd" type="Script" id=14]
+[ext_resource path="res://Units/CowUnit.tscn" type="PackedScene" id=15]
+[ext_resource path="res://MainMenu.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Units/Human2Unit.tscn" type="PackedScene" id=17]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -73,6 +76,7 @@ size = Vector2( 4, 8 )
 
 [node name="Level4" type="Node"]
 script = ExtResource( 14 )
+next_scene = ExtResource( 16 )
 
 [node name="LevelUI" parent="." instance=ExtResource( 4 )]
 
@@ -110,23 +114,19 @@ __meta__ = {
 
 [node name="PlayerUnits" type="Node" parent="World"]
 
-[node name="PigeonUnit2" parent="World/PlayerUnits" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0.5, -4.5 )
-movement_range = 1
-movement_pattern = 2
-
 [node name="PigeonUnit" parent="World/PlayerUnits" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5 )
-attack = 50
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, -0.5 )
+
+[node name="BaseUnit" parent="World/PlayerUnits" instance=ExtResource( 15 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -5.5 )
 
 [node name="EnemyUnits" type="Node" parent="World"]
 
-[node name="PigeonUnit" parent="World/EnemyUnits" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -6.5 )
+[node name="BaseUnit" parent="World/EnemyUnits" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0.5, -1.5 )
 
-[node name="DogUnit" parent="World/EnemyUnits" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.5, 0.5 )
-enemy = true
+[node name="BaseUnit2" parent="World/EnemyUnits" instance=ExtResource( 17 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.45322, 0.5, -4.38649 )
 
 [node name="MeshInstance3" type="MeshInstance" parent="World"]
 transform = Transform( 1.2941, 1.25, -0.933013, 5.65667e-08, 4.82963, 0.258819, 4.82963, -0.334936, 0.25, 8.5, 1.5, -4 )
@@ -164,6 +164,10 @@ material/0 = null
 transform = Transform( 0.965926, 0, -0.258819, 0.12941, 0.866025, 0.482963, 0.224144, -0.5, 0.836516, -6, 0, -7.5 )
 mesh = SubResource( 15 )
 material/0 = null
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
 
 [connection signal="pressed" from="LevelUI/EndTurnButton" to="World" method="_on_EndTurnButton_pressed"]
 [connection signal="phase_changed" from="World" to="." method="_on_World_phase_changed"]

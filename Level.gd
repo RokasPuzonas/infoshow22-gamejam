@@ -1,6 +1,7 @@
 extends Node
 
 export(PackedScene) var next_scene
+
 var fade
 var count = 1
 var anim_playing = false
@@ -19,9 +20,12 @@ func _process(delta):
 	if count == 0 and not anim_playing:
 		fade.play("Fade_in")
 		anim_playing = true
+	
+		
 	if anim_playing:
 		if not fade.is_playing():
 			get_tree().change_scene_to(next_scene)
+	
 	
 func _on_World_phase_changed(phase):
 	var turn_label = $"LevelUI/TurnLabel"

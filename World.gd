@@ -8,12 +8,12 @@ var current_marker
 var current_turn
 
 var selected_mutation
-
+var phase_counter
 signal phase_changed;
 
 func _ready():
 	get_tree().paused = false
-	
+	phase_counter = 0
 	set_phase(TurnPhase.PHASE.PLAYER)
 	if get_parent().name == "Level1":
 		play_dialog("res://assets/Dialog/DialogTutorial.json")
@@ -116,7 +116,7 @@ func set_phase(phase):
 func perform_combat():
 	var player_units = $PlayerUnits.get_children() 
 	var enemy_units = $EnemyUnits.get_children()
-	
+	phase_counter +=1
 	for player_unit in player_units:
 		for nearby_unit in get_units_around(player_unit, enemy_units):
 			perform_attack(player_unit, nearby_unit)
@@ -132,8 +132,12 @@ func perform_combat():
 			if nearby_unit.health <= 0:
 				player_units.remove(player_units.find(nearby_unit))
 				nearby_unit.queue_free()
-	
-	set_phase(TurnPhase.PHASE.MUTATION)
+	if phase_counter == 2:
+		
+		set_phase(TurnPhase.PHASE.MUTATION)
+		phase_counter = 0
+	else:
+		set_phase(TurnPhase.PHASE.PLAYER)
 	
 func perform_attack(from, to):
 	to.emit_damage_particles()

@@ -6,6 +6,9 @@
 [ext_resource path="res://assets/textures/dog3.png" type="Texture" id=4]
 
 [node name="DogUnit" instance=ExtResource( 1 )]
+max_health = 20
+attack = 15
+movement_pattern = 1
 stage0_texture = ExtResource( 3 )
 stage1_texture = ExtResource( 2 )
 stage2_texture = ExtResource( 4 )
