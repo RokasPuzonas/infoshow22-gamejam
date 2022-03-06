@@ -98,10 +98,10 @@ func clear_cursor_marker():
 		cursor_marker = null
 
 func _process(_delta):
-	if len(get_enemy_units()) == 0 || Input.is_action_just_pressed("skip_level"):
+	if len(get_enemy_units()) == 0:
 		if next_scene:
 			fade_to_scene(next_scene)
-	elif len(get_player_units()) == 0:
+	elif len(get_player_units()) == 0 || Input.is_action_just_pressed("skip_level"):
 		fade_to_scene(load("res://LoseScreen.tscn"))
 		
 	var pos = get_position_under_mouse()

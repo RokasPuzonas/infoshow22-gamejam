@@ -20,7 +20,7 @@ func _ready():
 func show_picker():
 	visible = true;
 	$AudioStreamPlayer.play()
-	$AudioStreamPlayer.volume_db = -5
+	$AudioStreamPlayer.volume_db = -40
 	
 	for child in $MutationContainer.get_children():
 		child.queue_free()
@@ -35,7 +35,7 @@ func show_picker():
 
 func hide_picker():
 	visible = false;
-	tween_out.interpolate_property($AudioStreamPlayer, "volume_db", -5, -80, 1.00, 1, Tween.EASE_IN, 0)
+	tween_out.interpolate_property($AudioStreamPlayer, "volume_db", -40, -80, 1.00, 1, Tween.EASE_IN, 0)
 	tween_out.start()
 
 func selected_mutation(mutation):

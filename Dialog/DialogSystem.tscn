@@ -68,4 +68,5 @@ text = "text"
 
 [node name="VoicePlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+volume_db = -25.405
 pitch_scale = 0.76
