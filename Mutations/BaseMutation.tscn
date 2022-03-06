@@ -1,0 +1,89 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Mutations/BaseMutation.gd" type="Script" id=1]
+[ext_resource path="res://assets/textures/upgrades/vitality_icon.png" type="Texture" id=2]
+
+[node name="BaseMutation" type="CenterContainer"]
+anchor_right = 0.195
+anchor_bottom = 0.245
+margin_right = -23.6
+margin_bottom = 168.6
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Container" type="VBoxContainer" parent="."]
+margin_left = 12.0
+margin_top = 17.0
+margin_right = 212.0
+margin_bottom = 327.0
+rect_min_size = Vector2( 200, 0 )
+
+[node name="Name" type="Label" parent="Container"]
+margin_right = 200.0
+margin_bottom = 14.0
+rect_pivot_offset = Vector2( 66, 18 )
+text = "[NAME]"
+align = 1
+autowrap = true
+
+[node name="Seperator2" type="Label" parent="Container"]
+margin_top = 18.0
+margin_right = 200.0
+margin_bottom = 32.0
+rect_pivot_offset = Vector2( -190, -31 )
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Seperator" type="Label" parent="Container"]
+margin_top = 36.0
+margin_right = 200.0
+margin_bottom = 50.0
+rect_pivot_offset = Vector2( -190, -31 )
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Description" type="Label" parent="Container"]
+margin_top = 54.0
+margin_right = 200.0
+margin_bottom = 154.0
+rect_min_size = Vector2( 0, 100 )
+size_flags_horizontal = 3
+text = "[DESCRIPTION]"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="IconContainer" type="CenterContainer" parent="Container"]
+margin_top = 158.0
+margin_right = 200.0
+margin_bottom = 286.0
+
+[node name="Icon" type="TextureRect" parent="Container/IconContainer"]
+margin_left = 36.0
+margin_right = 164.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+
+[node name="ApplyButton" type="Button" parent="Container"]
+margin_top = 290.0
+margin_right = 200.0
+margin_bottom = 310.0
+text = "Apply mutation"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Container/ApplyButton" to="." method="_on_ApplyButton_pressed"]

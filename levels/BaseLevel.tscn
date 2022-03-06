@@ -1,0 +1,152 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://levels/Level.gd" type="Script" id=1]
+[ext_resource path="res://meshlib.tres" type="MeshLibrary" id=2]
+[ext_resource path="res://levels/World.gd" type="Script" id=3]
+[ext_resource path="res://levels/PlayerController.gd" type="Script" id=4]
+[ext_resource path="res://theme.tres" type="Theme" id=5]
+[ext_resource path="res://levels/EnemyController.gd" type="Script" id=6]
+[ext_resource path="res://UI/MutationPicker.tscn" type="PackedScene" id=7]
+[ext_resource path="res://UI/Fade_out.tres" type="Animation" id=8]
+[ext_resource path="res://assets/audio/transition.wav" type="AudioStream" id=9]
+[ext_resource path="res://levels/Camera.gd" type="Script" id=10]
+
+[sub_resource type="Environment" id=1]
+background_mode = 1
+background_color = Color( 0.14902, 0.137255, 0.180392, 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "Fade_in"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ) ]
+}
+
+[node name="BaseLevel" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="PlayerController" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="MoveMarkers" type="Spatial" parent="PlayerController"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5 )
+
+[node name="EnemyController" type="Node" parent="."]
+script = ExtResource( 6 )
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EndTurn" type="Button" parent="UI"]
+visible = false
+margin_left = 18.0
+margin_top = 16.0
+margin_right = 175.0
+margin_bottom = 73.0
+text = "End turn"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PhaseLabel" type="Label" parent="UI"]
+anchor_right = 1.0
+margin_bottom = 49.0
+text = "Phase label"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MutationPicker" parent="UI" instance=ExtResource( 7 )]
+visible = false
+
+[node name="PickUnitLabel" type="Label" parent="UI"]
+visible = false
+anchor_right = 1.0
+margin_top = 73.0
+margin_bottom = 98.0
+text = "Pick someone for the mutation"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.707107, 0.353553, -0.612372, 0, 0.866025, 0.5, 0.707107, -0.353553, 0.612372, -2.505, 2.464, 3.302 )
+environment = SubResource( 1 )
+projection = 1
+size = 6.96445
+script = ExtResource( 10 )
+
+[node name="World" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5 )
+script = ExtResource( 3 )
+
+[node name="GridMap" type="GridMap" parent="World"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.5, -0.5 )
+mesh_library = ExtResource( 2 )
+cell_size = Vector3( 1, 1, 1 )
+data = {
+"cells": PoolIntArray(  )
+}
+__meta__ = {
+"_editor_clip_": 0
+}
+
+[node name="Fade" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Fade"]
+reset_on_save = false
+anims/Fade_in = SubResource( 2 )
+anims/Fade_out = ExtResource( 8 )
+anims/RESET = SubResource( 3 )
+
+[node name="SpawnLocations" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5 )
+
+[node name="TransitionPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+
+[connection signal="enemy_phase_enter" from="." to="EnemyController" method="_on_BaseLevel_enemy_phase_enter"]
+[connection signal="player_phase_enter" from="." to="PlayerController" method="_on_BaseLevel_player_phase_enter"]
+[connection signal="player_phase_leave" from="." to="PlayerController" method="_on_BaseLevel_player_phase_leave"]
+[connection signal="finished_turn" from="EnemyController" to="." method="_on_EnemyController_finished_turn"]
+[connection signal="pressed" from="UI/EndTurn" to="." method="_on_EndTurn_pressed"]
+[connection signal="picked_mutation" from="UI/MutationPicker" to="." method="_on_MutationPicker_picked_mutation"]
+[connection signal="animation_finished" from="Fade/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

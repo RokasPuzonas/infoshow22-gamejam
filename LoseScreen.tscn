@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://LoseScreen.gd" type="Script" id=1]
+[ext_resource path="res://UIButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://MenuButton.gd" type="Script" id=3]
+[ext_resource path="res://PlayButton.gd" type="Script" id=4]
+
+[node name="LoseScreen" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Retry" parent="." instance=ExtResource( 2 )]
+margin_top = -120.0
+margin_bottom = -60.0
+text = "Retry"
+script = ExtResource( 4 )
+
+[node name="Quit" parent="." instance=ExtResource( 2 )]
+margin_top = 0.0
+margin_bottom = 60.0
+text = "Main Menu"
+script = ExtResource( 3 )
