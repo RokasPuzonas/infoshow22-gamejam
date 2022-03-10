@@ -36,7 +36,7 @@ margin_left = -80.0
 margin_right = 80.0
 margin_bottom = 60.0
 theme = ExtResource( 2 )
-text = "Main Menu"
+text = "Quit"
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -89,7 +89,7 @@ func _process(_delta):
 	if (len(get_enemy_units()) == 0 && !force_stay_on_scene) || Input.is_action_just_pressed("debug_skip_level"):
 		transitionSystem.change_scene_to(next_scene)
 	elif len(get_player_units()) == 0 || Input.is_action_just_pressed("debug_game_over"):
-		transitionSystem.change_scene("res://LoseScreen.tscn")
+		transitionSystem.change_scene("res://UI/LoseScreen.tscn")
 		
 	var pos = get_position_under_mouse()
 	if pos:
