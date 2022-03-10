@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/textures/upgrades/attack_icon.png" type="Texture" id=1]
+[ext_resource path="res://Assets/textures/mutations/attack_icon.png" type="Texture" id=1]
 [ext_resource path="res://Mutations/BaseMutation.tscn" type="PackedScene" id=2]
-[ext_resource path="res://theme.tres" type="Theme" id=3]
+[ext_resource path="res://Themes/theme.tres" type="Theme" id=3]
 
 [node name="AttackMutation" instance=ExtResource( 2 )]
 theme = ExtResource( 3 )

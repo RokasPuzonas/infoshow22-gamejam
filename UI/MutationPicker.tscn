@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://assets/audio/whispering-sounds.wav" type="AudioStream" id=1]
+[ext_resource path="res://Assets/audio/whispering-sounds.wav" type="AudioStream" id=1]
 [ext_resource path="res://UI/MutationPicker.gd" type="Script" id=2]
 
 [node name="MutationPicker" type="Control"]

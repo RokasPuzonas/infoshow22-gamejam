@@ -1,10 +1,10 @@
 [gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Units/BaseUnit.gd" type="Script" id=1]
-[ext_resource path="res://assets/kenny-particles/particlePack_1.1/PNG (Transparent)/scratch_01.png" type="Texture" id=2]
-[ext_resource path="res://assets/audio/hit1.wav" type="AudioStream" id=3]
-[ext_resource path="res://assets/audio/step.wav" type="AudioStream" id=4]
-[ext_resource path="res://assets/textures/shadow.png" type="Texture" id=5]
+[ext_resource path="res://Assets/textures/scratch_01.png" type="Texture" id=2]
+[ext_resource path="res://Assets/audio/hit-unit.wav" type="AudioStream" id=3]
+[ext_resource path="res://Assets/audio/step.wav" type="AudioStream" id=4]
+[ext_resource path="res://Assets/textures/shadow.png" type="Texture" id=5]
 
 [sub_resource type="SpatialMaterial" id=2]
 flags_transparent = true

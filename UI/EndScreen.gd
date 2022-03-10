@@ -1,5 +1,4 @@
 extends ColorRect
 
-func _ready():
-	$Fade.visible = true
-	$Fade/AnimationPlayer.play("Fade_out")
+func _on_Quit_pressed():
+	get_tree().quit()
